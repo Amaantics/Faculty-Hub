@@ -43,7 +43,7 @@ model FacultyAccount {
   phone        String?
   role         String @default("faculty")
 
-  linkedFacultyId Int?
+  linkedFacultyId Int?    @unique
   linkedFaculty   FacultyRecord? @relation(fields: [linkedFacultyId], references: [id])
 
   createdAt DateTime @default(now())

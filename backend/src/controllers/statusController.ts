@@ -34,6 +34,14 @@ export async function setStatus(req: Request, res: Response, next: NextFunction)
       return;
     }
 
+    if (req.user!.role !== 'admin') {
+      const account = await prisma.facultyAccount.findUnique({ where: { email: req.user!.email } });
+      if (account?.linkedFacultyId !== facultyId) {
+        res.status(403).json({ error: 'You can only set your own status' });
+        return;
+      }
+    }
+
     const override = await prisma.statusOverride.upsert({
       where: { facultyId },
       update: { status, note: note ?? null, updatedBy: req.user!.email },
@@ -52,6 +60,14 @@ export async function clearStatus(req: Request, res: Response, next: NextFunctio
     if (isNaN(facultyId)) {
       res.status(400).json({ error: 'Invalid faculty id' });
       return;
+    }
+
+    if (req.user!.role !== 'admin') {
+      const account = await prisma.facultyAccount.findUnique({ where: { email: req.user!.email } });
+      if (account?.linkedFacultyId !== facultyId) {
+        res.status(403).json({ error: 'You can only clear your own status' });
+        return;
+      }
     }
 
     await prisma.statusOverride.deleteMany({ where: { facultyId } });
