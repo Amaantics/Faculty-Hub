@@ -4,9 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Faculty Hub — MIT School of Computing</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/mit-logo.png" />
+    <link rel="apple-touch-icon" href="/mit-logo.png" />
+
+    <!-- SEO -->
+    <meta name="description" content="Live faculty availability and seating directory for MIT School of Computing, MIT-ADT University." />
+    <meta name="theme-color" content="#4f46e5" />
+    <link rel="canonical" href="https://faculty-hub-iota.vercel.app" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Faculty Hub — MIT School of Computing" />
+    <meta property="og:description" content="Find faculty by name, floor, or block. See who's available right now." />
+    <meta property="og:url" content="https://faculty-hub-iota.vercel.app" />
+    <meta property="og:site_name" content="Faculty Hub" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Faculty Hub — MIT School of Computing" />
+    <meta name="twitter:description" content="Find faculty by name, floor, or block. See who's available right now." />
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
   </head>
   <body>
+    <noscript>
+      <div style="font-family:sans-serif;text-align:center;padding:4rem;color:#475569">
+        <h1>Faculty Hub</h1>
+        <p>This application requires JavaScript to run. Please enable JavaScript in your browser and reload the page.</p>
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

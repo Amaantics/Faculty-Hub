@@ -16,8 +16,8 @@ export function errorHandler(
     return;
   }
 
-  if (config.isDev) console.error(err);
+  console.error('[ERROR]', err);
 
-  const message = err instanceof Error ? err.message : 'Internal server error';
+  const message = config.isDev && err instanceof Error ? err.message : 'Internal server error';
   res.status(500).json({ error: message });
 }

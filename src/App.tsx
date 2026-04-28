@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Sidebar, MobileNav } from './components/Sidebar';
 import { Dashboard } from './components/Dashboard';
 import { FacultyGrid } from './components/FacultyGrid';
@@ -44,6 +44,10 @@ export default function App() {
   };
 
   const { title, subtitle } = VIEW_TITLES[activeView];
+
+  useEffect(() => {
+    document.title = `${title} — Faculty Hub`;
+  }, [title]);
 
   return (
     <div className="flex min-h-screen bg-slate-50">

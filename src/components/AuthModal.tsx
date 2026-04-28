@@ -8,6 +8,12 @@ import type { RegisterPayload } from '../api/client';
 
 const TITLES: FacultyTitle[] = ['Dr.', 'Prof.', 'Mr.', 'Mrs.', 'Ms.', 'Miss.'];
 
+const WEAK_PINS = new Set([
+  '0000','1111','2222','3333','4444','5555','6666','7777','8888','9999',
+  '1234','4321','1122','1212','2121','0123','1000','1001','1010','1100',
+  '1313','1414','1515','2580','3456','4545','6969','7410','1357','2468',
+]);
+
 const ALL_BLOCKS: BlockCode[] = [
   'S-001','N-003','S-211',
   'S-309',
@@ -119,6 +125,7 @@ export function AuthModal({ linkedFacultyIds, onLogin, onRegister, onClose }: Pr
     const email = form.email.trim().toLowerCase();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = 'Enter a valid email address.';
     if (form.pin.length !== 4) errs.pin = 'PIN must be exactly 4 digits.';
+    else if (WEAK_PINS.has(form.pin)) errs.pin = 'This PIN is too common. Please choose a less predictable PIN.';
     if (form.confirmPin !== form.pin) errs.confirmPin = 'PINs do not match.';
     setErrors(errs);
     if (Object.keys(errs).length === 0) setStep('profile');
@@ -191,7 +198,12 @@ export function AuthModal({ linkedFacultyIds, onLogin, onRegister, onClose }: Pr
       style={{ backgroundColor: 'rgba(15,23,42,0.7)' }}
       onClick={e => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[92vh]">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auth-modal-title"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[92vh]"
+      >
 
         {/* ── Top bar ── */}
         <div className="bg-slate-900 px-5 py-4 flex items-center justify-between flex-shrink-0">
@@ -203,7 +215,7 @@ export function AuthModal({ linkedFacultyIds, onLogin, onRegister, onClose }: Pr
             )}
             <MITSeal size={32} />
             <div>
-              <p className="text-white font-bold text-sm leading-tight">Faculty Hub</p>
+              <p id="auth-modal-title" className="text-white font-bold text-sm leading-tight">Faculty Hub</p>
               <p className="text-slate-400 text-xs leading-tight">MIT School of Computing</p>
             </div>
           </div>
@@ -349,6 +361,7 @@ export function AuthModal({ linkedFacultyIds, onLogin, onRegister, onClose }: Pr
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="Search name or block…"
+                  aria-label="Search faculty by name or block"
                   className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   autoFocus
                 />
