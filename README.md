@@ -36,7 +36,7 @@ A smart dashboard designed for **real-time faculty availability tracking** at MI
 * Deployment and hosting using modern platforms
 * Importance of UI/UX in dashboards
 
----
+
 
 
 
